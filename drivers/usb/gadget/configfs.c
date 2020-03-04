@@ -1478,6 +1478,7 @@ static void configfs_composite_unbind(struct usb_gadget *gadget)
 {
 	struct usb_composite_dev	*cdev;
 	struct gadget_info		*gi;
+        unsigned long flags;
 
 	/* the gi->lock is hold by the caller */
 
