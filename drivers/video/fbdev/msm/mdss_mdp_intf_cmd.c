@@ -1991,7 +1991,6 @@ static int mdss_mdp_cmd_remove_vsync_handler(struct mdss_mdp_ctl *ctl,
 		sctx = (struct mdss_mdp_cmd_ctx *) sctl->intf_ctx[MASTER_CTX];
 
 	spin_lock_irqsave(&ctx->clk_lock, flags);
-	MDSS_XLOG((u32)handle, handle->enabled, (u32)&ctx->vsync_handlers, 0x8888);
 	if (handle->enabled) {
 		handle->enabled = false;
 		list_del_init(&handle->list);
@@ -3262,11 +3261,8 @@ static int mdss_mdp_cmd_stop_sub(struct mdss_mdp_ctl *ctl,
 		return -ENODEV;
 	}
 
-	MDSS_XLOG(ctl->num);
-
 	mutex_lock(&ctl->vsync_handler_lock);
 	list_for_each_entry_safe(handle, tmp, &ctx->vsync_handlers, list) {
-		MDSS_XLOG((u32)handle, (u32)tmp, handle->enabled, (u32)&ctx->vsync_handlers, 0x7777);
 		mdss_mdp_cmd_remove_vsync_handler_nolock(ctl, handle);
 	}
 	mutex_unlock(&ctl->vsync_handler_lock);
